@@ -1,0 +1,12 @@
+# docker compose up --build   ->  http://localhost:7410
+services:
+  api:
+    build: { context: ., dockerfile: app/Dockerfile }
+    volumes:
+      - ./app/data:/srv/app/data:ro
+      - ${BER_WORK:-~/ber/work}:/work:ro
+  web:
+    build: web
+    environment: { BER_API: "http://api:7400" }
+    ports: ["7410:7410"]
+    depends_on: [api]
