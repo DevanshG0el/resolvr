@@ -10,7 +10,7 @@ const STATS = [
 ];
 
 const STEPS = [
-  { icon: Filter, t: "Clean", d: "Transliterate Devanagari to Latin, expand abbreviations (Pvt→Private, Rd→Road), pull out legal form, state, PIN and house numbers." },
+  { icon: Filter, t: "Clean", d: "Transliterate Devanagari to Latin, expand abbreviations (Pvt to Private, Rd to Road), pull out legal form, state, PIN and house numbers." },
   { icon: ScanSearch, t: "Block", d: "A fine-tuned multilingual-e5 retriever proposes ~6 candidates per business out of millions, keeping 99.7% of true matches." },
   { icon: Boxes, t: "Score", d: "81 similarity features feed a two-stage XGBoost matcher, with e5, BGE and Qwen3 cross-encoders as extra evidence." },
   { icon: Brain, t: "Decide", d: "Per business, keep the candidate set that maximises expected F0.5, so uncertain merges are left out." },

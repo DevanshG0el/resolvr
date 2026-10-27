@@ -23,14 +23,19 @@ export type Overview = {
   per_country: { model: string; country: string; f05: number; precision: number; recall: number }[];
   hard_pairs: { model: string; roc_auc: number; pr_auc: number; n_pairs: number; n_pos: number }[];
   importance: { feature: string; gain: number }[];
-  importance_live: { feature: string; gain: number }[];
+  importance_live: { feature: string; label: string; gain: number }[];
   ceiling: { f05: number };
   curves: Record<string, { fpr: number[]; tpr: number[]; pr: number[]; rc: number[] }>;
   eda: null | Record<string, unknown>;
 };
 
 async function j<T>(res: Response): Promise<T> {
-  if (!res.ok) throw new Error((await res.text()) || res.statusText);
+  if (!res.ok) {
+    const body = await res.text();
+    let msg = body || res.statusText;
+    try { const d = JSON.parse(body).detail; if (d) msg = typeof d === "string" ? d : JSON.stringify(d); } catch {}
+    throw new Error(res.status >= 500 ? `The matching service is unavailable (${res.status}). Try again in a moment.` : msg);
+  }
   return res.json() as Promise<T>;
 }
 
@@ -45,4 +50,7 @@ export const api = {
 };
 
 export const COUNTRIES = ["India", "US", "France"];
+// the raw sources spell missing fields as "<NULL>" or "nan"; hide those placeholders when displaying a record
+export const tidy = (s: string | null | undefined) =>
+  (s ?? "").replace(/(^|,\s*)(<null>|null|nan)(?=\s*(,|$))/gi, "").replace(/^\s*,\s*|\s*,\s*$/g, "").trim();
 export const pct = (x: number, d = 1) => `${(x * 100).toFixed(d)}%`;

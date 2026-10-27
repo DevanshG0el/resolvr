@@ -43,7 +43,7 @@ LABELS = {  # plain-English names for the explanation panel
     "cos_gap_s1": "Semantic gap to best", "nm_tset_gap_s1": "Name gap to best", "ad_tset_gap_s1": "Address gap to best",
     "n_near_top_s1": "Near-tied candidates", "a_has_legal": "Query has legal form", "b_has_legal": "Record has legal form",
     "rec_top_margin": "Record's S1 margin", "s1_top_margin": "Query's top-2 margin", "n_cand_s1": "Number of candidates",
-    "rec_addr_empty": "Record has no address", "rec_native": "Record in native script", "src": "Record source",
+    "rec_addr_empty": "Record has no address", "b_nnums": "Numbers in record address", "rec_native": "Record in native script", "src": "Record source",
     "a_rare_logdf": "Query rarest-token frequency", "b_rare_logdf": "Record rarest-token frequency",
     "cos_rank_s1": "Semantic rank among candidates", "nm_tset_rank_s1": "Name rank among candidates", "a_n_s1_same_name": "Other businesses with this name",
 }

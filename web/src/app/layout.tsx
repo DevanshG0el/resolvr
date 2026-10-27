@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_Devanagari, Noto_Sans_Tamil, Outfit } from "next/font/google";
+import { Noto_Sans_Devanagari, Noto_Sans_Oriya, Noto_Sans_Tamil, Outfit } from "next/font/google";
 import Nav from "@/components/Nav";
 import "./globals.css";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
-// Indic fallbacks: Source 2/3 records are often written in Devanagari or Tamil
+// Indic fallbacks: Source 2/3 records are often written in Devanagari, Tamil or Odia
 const deva = Noto_Sans_Devanagari({ subsets: ["devanagari"], variable: "--font-deva", weight: ["400", "600"] });
 const tamil = Noto_Sans_Tamil({ subsets: ["tamil"], variable: "--font-tamil", weight: ["400", "600"] });
+const odia = Noto_Sans_Oriya({ subsets: ["oriya"], variable: "--font-odia", weight: ["400", "600"] });
 
 export const metadata: Metadata = {
   title: "Resolvr · Business Entity Resolution",
@@ -20,7 +21,7 @@ export const viewport: Viewport = { themeColor: "#05031a", width: "device-width"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${deva.variable} ${tamil.variable}`}>
+    <html lang="en" className={`${outfit.variable} ${deva.variable} ${tamil.variable} ${odia.variable}`}>
       <body className="min-h-dvh font-sans">
         <Nav />
         {children}

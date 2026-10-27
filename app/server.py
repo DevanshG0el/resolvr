@@ -22,7 +22,7 @@ from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from engine import DATA, ROOT, Engine
+from engine import DATA, ROOT, Engine, label
 
 RES = ROOT / "results"
 app = FastAPI(title="Business Entity Resolution API", version="1.0")
@@ -63,7 +63,7 @@ def overview_payload():
         "hard_pairs": pl.read_csv(RES / "hard_pairs.csv").to_dicts(),
         "importance": pl.read_csv(RES / "importance.csv").head(15).to_dicts(),
         # the deployed single-stage matcher: gain of the 81 hand-crafted features (no stage-2 context dominating)
-        "importance_live": sorted(({"feature": k, "gain": v} for k, v in engine.bst.get_score(importance_type="gain").items()),
+        "importance_live": sorted(({"feature": k, "label": label(k), "gain": v} for k, v in engine.bst.get_score(importance_type="gain").items()),
                                   key=lambda r: -r["gain"])[:15],
         "ceiling": json.loads((RES / "ceiling.json").read_text()),
         "curves": pr,

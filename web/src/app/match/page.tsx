@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Loader2, Wand2 } from "lucide-react";
 import PageHead from "@/components/PageHead";
@@ -23,17 +23,28 @@ function MatchInner() {
   const [res, setRes] = useState<MatchResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  const [runId, setRunId] = useState(0);
+  const seq = useRef(0);
+  const out = useRef<HTMLElement>(null);
 
   async function run(n = name, a = address, c = country) {
     if (!n.trim()) return;
+    const id = ++seq.current;
     setBusy(true);
     setErr("");
     try {
-      setRes(await api.match(n, a, c));
+      const r = await api.match(n, a, c);
+      if (id !== seq.current) return; // a newer query was sent meanwhile
+      setRes(r);
+      setRunId(id);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "request failed");
+      if (id === seq.current) setErr(e instanceof TypeError ? "Could not reach the matching service." : e instanceof Error ? e.message : "Request failed");
     } finally {
-      setBusy(false);
+      if (id === seq.current) setBusy(false);
+    }
+    // on one-column layouts the results sit below the form
+    if (id === seq.current && window.matchMedia("(max-width: 1023px)").matches) {
+      requestAnimationFrame(() => out.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
     }
   }
 
@@ -62,7 +73,7 @@ function MatchInner() {
           <p className="mb-2 mt-6 text-xs uppercase tracking-wider text-white/40">Try an example</p>
           <div className="flex flex-wrap gap-2">
             {EXAMPLES.map((ex) => (
-              <button type="button" key={ex.name} className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-white/75 hover:bg-white/10"
+              <button type="button" key={ex.name} disabled={busy} className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-white/75 transition hover:bg-white/10 disabled:opacity-50"
                 onClick={() => { setName(ex.name); setAddress(ex.address); setCountry(ex.country); run(ex.name, ex.address, ex.country); }}>
                 {ex.name}
               </button>
@@ -70,18 +81,23 @@ function MatchInner() {
           </div>
         </form>
 
-        <section aria-live="polite" className="min-w-0">
+        <section ref={out} aria-live="polite" aria-busy={busy} className="min-w-0 scroll-mt-4">
           {err && <div className="glass rounded-2xl p-5 text-coral">{err}</div>}
-          {!res && !err && (
+          {busy && !res && (
+            <div className="glass grid min-h-64 place-items-center rounded-2xl p-8 text-white/60">
+              <span className="inline-flex items-center gap-2"><Loader2 className="animate-spin" size={18} /> Cleaning, retrieving and scoring…</span>
+            </div>
+          )}
+          {!res && !err && !busy && (
             <div className="glass grid min-h-64 place-items-center rounded-2xl p-8 text-center text-white/50">
               Results appear here: each candidate with its match probability and the features that drove it.
             </div>
           )}
           {res && (
-            <div className="space-y-4">
+            <div className={`space-y-4 transition-opacity ${busy ? "opacity-50" : ""}`}>
               <div className="glass rounded-2xl p-5">
                 <p className="text-xs uppercase tracking-wider text-white/40">After cleaning</p>
-                <div className="mt-2 grid gap-3 text-sm sm:grid-cols-2">
+                <div className="mt-2 grid gap-3 break-words text-sm sm:grid-cols-2">
                   <div><span className="text-white/50">Name </span>{res.query.name_clean || "–"}</div>
                   <div><span className="text-white/50">Address </span>{res.query.address_clean || "–"}</div>
                   <div><span className="text-white/50">Legal form </span>{res.query.legal || "–"}</div>
@@ -102,7 +118,7 @@ function MatchInner() {
                   No candidate is confident enough, so this business is predicted to have no match in Sources 2 and 3.
                 </div>
               )}
-              {res.candidates.map((c) => <CandidateCard key={c.id} c={c} />)}
+              {res.candidates.map((c) => <CandidateCard key={`${runId}-${c.id}`} c={c} />)}
             </div>
           )}
         </section>

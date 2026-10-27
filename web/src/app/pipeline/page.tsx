@@ -1,12 +1,13 @@
+import { ArrowRight } from "lucide-react";
 import PageHead from "@/components/PageHead";
 
 const CLEAN = [
-  { raw: "இண்டோ ஃபவுண்டேஷன் ஸ்டோர்ஸ்", clean: "indo foundation stors", note: "Tamil → Latin (mined dictionary + anyascii)" },
-  { raw: "विजय इंडस्ट्रीज प्राइवेट लिमिटेड", clean: "vijay industries private limited · legal: private limited", note: "Devanagari → Latin, legal form extracted" },
-  { raw: "ଷ୍ଟାର୍ ପ୍ରୋଜେକ୍ଟସ୍ ପ୍ରାଇଭେଟ୍ ଲିମିଟେଡ୍", clean: "star projects private limited", note: "Odia → Latin" },
+  { raw: "இண்டோ ஃபவுண்டேஷன் ஸ்டோர்ஸ்", clean: "indo foundation stors", note: "Tamil to Latin (mined dictionary + anyascii)" },
+  { raw: "विजय इंडस्ट्रीज प्राइवेट लिमिटेड", clean: "vijay industries private limited · legal: private limited", note: "Devanagari to Latin, legal form extracted" },
+  { raw: "ଷ୍ଟାର୍ ପ୍ରୋଜେକ୍ଟସ୍ ପ୍ରାଇଭେଟ୍ ଲିମିଟେଡ୍", clean: "star projects private limited", note: "Odia to Latin" },
   { raw: "HARDMAN + WILLIAMS CORPORATION", clean: "hardman williams corp · legal: corp", note: "case, punctuation, suffix normalised" },
   { raw: "34 R Sainte-monique, Bordeaux, Nouvelle-Aquitaine", clean: "34 rue sainte monique bordeaux · region NAQ", note: "French street abbreviations, region code" },
-  { raw: "NO-103, SANKARAPURAM NEW COLONY, THOOTHUKUDI, தமிழ்நாடு", clean: "no 103 sankarapuram new colony thoothukudi · state TN", note: "native-script state → code" },
+  { raw: "NO-103, SANKARAPURAM NEW COLONY, THOOTHUKUDI, தமிழ்நாடு", clean: "no 103 sankarapuram new colony thoothukudi · state TN", note: "native-script state to code" },
 ];
 
 const SPLITS = [
@@ -36,9 +37,9 @@ export default function Pipeline() {
           <ol className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {STAGES.map(([t, tech, d], i) => (
               <li key={t} className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                <div className="flex items-baseline justify-between">
+                <div className="flex items-center justify-between">
                   <h3 className="text-lg font-medium">{i + 1}. {t}</h3>
-                  {i < STAGES.length - 1 && <span className="hidden text-coral lg:inline">→</span>}
+                  {i < STAGES.length - 1 && <ArrowRight size={16} className="hidden shrink-0 text-coral lg:block" aria-hidden />}
                 </div>
                 <p className="mt-1 text-xs text-mist">{tech}</p>
                 <p className="mt-2 text-sm leading-relaxed text-white/65">{d}</p>
@@ -48,7 +49,7 @@ export default function Pipeline() {
         </section>
 
         <section className="glass rounded-2xl p-5 sm:p-6">
-          <h2 className="text-xl font-medium">Data cleaning, before → after</h2>
+          <h2 className="text-xl font-medium">Data cleaning: before and after</h2>
           <p className="mt-1 text-sm text-white/55">Real records from the test set.</p>
           <div className="mt-5 divide-y divide-white/10">
             {CLEAN.map((c) => (
@@ -78,7 +79,7 @@ export default function Pipeline() {
           <h2 className="text-xl font-medium">Deployment</h2>
           <div className="mt-4 grid gap-4 text-sm text-white/70 sm:grid-cols-3">
             <div><div className="font-medium text-white">Next.js frontend</div>Responsive, installable as a PWA on Android, iOS and desktop; proxies /api to the backend.</div>
-            <div><div className="font-medium text-white">FastAPI backend</div>Live matcher (normalise → e5 retrieval → 81 features → XGBoost + SHAP), SQLite FTS for browsing.</div>
+            <div><div className="font-medium text-white">FastAPI backend</div>Live matcher (normalise, e5 retrieval, 81 features, XGBoost + SHAP), SQLite FTS for browsing.</div>
             <div><div className="font-medium text-white">Public access</div>Served from a GPU box through a Cloudflare tunnel over HTTPS; Docker files included.</div>
           </div>
         </section>

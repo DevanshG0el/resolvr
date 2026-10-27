@@ -1,6 +1,6 @@
 export default function PageHead({ eyebrow, title, sub }: { eyebrow: string; title: string; sub: string }) {
   return (
-    <div className="sky px-4 pb-14 pt-32 sm:px-8 sm:pt-36">
+    <div className="sky-head px-4 pb-16 pt-32 sm:px-8 sm:pt-36">
       <div className="mx-auto max-w-6xl">
         <p className="text-sm uppercase tracking-[0.2em] text-mist/80">{eyebrow}</p>
         <h1 className="glow-text mt-3 text-4xl font-medium tracking-tight sm:text-5xl">{title}</h1>

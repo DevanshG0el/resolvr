@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-outfit), var(--font-deva), var(--font-tamil), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-outfit), var(--font-deva), var(--font-tamil), var(--font-odia), ui-sans-serif, system-ui, sans-serif;
   --color-night: #05031a;
   --color-ink: #0b0730;
   --color-indigo-deep: #160c5c;
@@ -29,6 +29,13 @@ body {
     linear-gradient(180deg, #030112 0%, #0b0730 45%, #1a0f6e 100%);
 }
 
+/* inner-page header: same sky, but it settles back into the page colour so overlapping cards sit on a seamless edge */
+.sky-head {
+  background:
+    radial-gradient(60% 55% at 50% 80%, rgba(76, 46, 220, 0.45), transparent 70%),
+    linear-gradient(180deg, #030112 0%, #0b0730 40%, #1a0f6e 75%, var(--color-night) 100%);
+}
+
 .glass {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
   border: 1px solid rgba(201, 196, 245, 0.16);
@@ -40,7 +47,7 @@ body {
 
 @layer components {
 .btn-solid {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-medium text-ink transition hover:bg-mist focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-medium text-ink transition hover:bg-mist focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-wait disabled:opacity-70;
 }
 
 .btn-ghost {

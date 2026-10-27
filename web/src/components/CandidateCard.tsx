@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
-import type { Candidate } from "@/lib/api";
+import { tidy, type Candidate } from "@/lib/api";
 import ScoreRing from "./ScoreRing";
 
 export default function CandidateCard({ c }: { c: Candidate }) {
@@ -21,8 +21,8 @@ export default function CandidateCard({ c }: { c: Candidate }) {
               </span>
             )}
           </div>
-          <div className="mt-1 truncate font-medium">{c.name || <em className="text-white/40">no name</em>}</div>
-          <div className="truncate text-sm text-white/55">{c.address || "no address"}</div>
+          <div className="mt-1 truncate font-medium">{tidy(c.name) || <em className="text-white/40">no name</em>}</div>
+          <div className="truncate text-sm text-white/55">{tidy(c.address) || "no address"}</div>
         </div>
         <ChevronDown size={18} className={`shrink-0 text-white/50 transition ${open ? "rotate-180" : ""}`} />
       </button>

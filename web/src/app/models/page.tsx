@@ -18,7 +18,7 @@ const FAMILY_COLOR: Record<string, string> = {
   "Hybrid (ours)": "#ff5f7e",
 };
 const AXIS = { stroke: "rgba(255,255,255,.35)", fontSize: 12 };
-const TIP = { contentStyle: { background: "#0b0730", border: "1px solid rgba(201,196,245,.25)", borderRadius: 12 }, labelStyle: { color: "#fff" } };
+const TIP = { contentStyle: { background: "#0b0730", border: "1px solid rgba(201,196,245,.25)", borderRadius: 12 }, labelStyle: { color: "#fff" }, itemStyle: { color: "rgba(255,255,255,.85)" } };
 const short = (m: string) => m.replace(" (RapidFuzz)", "").replace(" (fine-tuned e5)", " e5").replace(" (fine-tuned)", "").replace(" (3-layer, PyTorch)", "")
   .replace("Ours: 2-stage XGBoost + cross-encoder", "Ours (2-stage)").replace("Ours + expected-F0.5 decision", "Ours + F0.5 rule");
 
@@ -35,7 +35,16 @@ function Panel({ title, sub, children }: { title: string; sub?: string; children
 export default function Models() {
   const [d, setD] = useState<Overview | null>(null);
   const [err, setErr] = useState("");
-  useEffect(() => { api.overview().then(setD).catch((e) => setErr(String(e))); }, []);
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => { api.overview().then(setD).catch((e) => setErr(e instanceof Error ? e.message : String(e))); }, []);
+  // phones: narrower label column so the bars keep most of the width
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const on = () => setNarrow(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
 
   if (!d) {
     return (
@@ -82,12 +91,12 @@ export default function Models() {
         <Panel title="Macro F0.5 by model" sub="The competition metric: F0.5 per Source 1 business (singletons included), averaged.">
           <div className="h-[440px]">
             <ResponsiveContainer>
-              <BarChart data={bars} layout="vertical" margin={{ left: 10, right: 30 }}>
+              <BarChart data={bars} layout="vertical" margin={{ left: 4, right: 48 }}>
                 <CartesianGrid horizontal={false} stroke="rgba(255,255,255,.08)" />
                 <XAxis type="number" domain={[0.7, 1]} tick={AXIS} stroke={AXIS.stroke} />
-                <YAxis type="category" dataKey="name" width={130} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)" }} stroke={AXIS.stroke} />
+                <YAxis type="category" dataKey="name" width={narrow ? 112 : 150} interval={0} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: narrow ? 10 : 12 }} stroke={AXIS.stroke} />
                 <Tooltip {...TIP} cursor={{ fill: "rgba(255,255,255,.05)" }} />
-                <Bar dataKey="f05" radius={[0, 6, 6, 0]} label={{ position: "right", fill: "#fff", fontSize: 11 }}>
+                <Bar dataKey="f05" radius={[0, 6, 6, 0]} label={{ position: "right", fill: "#fff", fontSize: 11, formatter: (v: number) => v.toFixed(4) }}>
                   {bars.map((b) => <Cell key={b.name} fill={FAMILY_COLOR[b.family]} />)}
                 </Bar>
               </BarChart>
@@ -95,38 +104,38 @@ export default function Models() {
           </div>
           <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
             {Object.entries(FAMILY_COLOR).map(([f, c]) => (
-              <span key={f} className="inline-flex items-center gap-1.5"><i className="h-2.5 w-2.5 rounded-sm" style={{ background: c }} />{f}</span>
+              <span key={f} className="inline-flex items-center gap-1.5"><i className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: c }} />{f}</span>
             ))}
           </div>
         </Panel>
 
         <div className="grid gap-6 lg:grid-cols-2">
           <Panel title="Precision–recall curves" sub="Pair level, on V-test.">
-            <div className="h-80">
+            <div className="h-96 sm:h-80">
               <ResponsiveContainer>
-                <LineChart margin={{ right: 10 }}>
+                <LineChart margin={{ right: 10, bottom: 12 }}>
                   <CartesianGrid stroke="rgba(255,255,255,.08)" />
-                  <XAxis type="number" dataKey="x" domain={[0, 1]} tick={AXIS} stroke={AXIS.stroke} label={{ value: "Recall", position: "insideBottom", offset: -2, fill: "#aaa", fontSize: 12 }} />
-                  <YAxis type="number" domain={[0.4, 1]} tick={AXIS} stroke={AXIS.stroke} />
+                  <XAxis type="number" dataKey="x" domain={[0, 1]} tick={AXIS} stroke={AXIS.stroke} label={{ value: "Recall", position: "insideBottom", offset: -8, fill: "#aaa", fontSize: 12 }} />
+                  <YAxis type="number" domain={[0.4, 1]} tick={AXIS} stroke={AXIS.stroke} width={44} label={{ value: "Precision", angle: -90, position: "insideLeft", offset: 8, fill: "#aaa", fontSize: 12 }} />
                   <Tooltip {...TIP} />
-                  <Legend wrapperStyle={{ fontSize: 11 }} />
+                  <Legend iconType="plainline" wrapperStyle={{ fontSize: 11, paddingTop: 14 }} />
                   {curveModels.filter((m) => d.curves[m]).map((m) => (
                     <Line key={m} name={short(m)} data={d.curves[m].rc.map((x, i) => ({ x, y: d.curves[m].pr[i] }))} dataKey="y"
-                      dot={false} strokeWidth={2} stroke={FAMILY_COLOR[famOf[m]]} isAnimationActive={false} />
+                      dot={false} activeDot={false} strokeWidth={2} stroke={FAMILY_COLOR[famOf[m]]} isAnimationActive={false} />
                   ))}
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </Panel>
           <Panel title="Hard pairs" sub={`PR-AUC on the ${d.hard_pairs[0]?.n_pairs.toLocaleString()} uncertain pairs where the Qwen3-Reranker-4B was run.`}>
-            <div className="h-80">
+            <div className="h-96 sm:h-80">
               <ResponsiveContainer>
-                <BarChart data={hard} layout="vertical" margin={{ left: 10, right: 30 }}>
+                <BarChart data={hard} layout="vertical" margin={{ left: 4, right: 40 }}>
                   <CartesianGrid horizontal={false} stroke="rgba(255,255,255,.08)" />
                   <XAxis type="number" domain={[0, 1]} tick={AXIS} stroke={AXIS.stroke} />
-                  <YAxis type="category" dataKey="name" width={120} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: 11 }} stroke={AXIS.stroke} />
+                  <YAxis type="category" dataKey="name" width={narrow ? 112 : 150} interval={0} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: narrow ? 10 : 11 }} stroke={AXIS.stroke} />
                   <Tooltip {...TIP} cursor={{ fill: "rgba(255,255,255,.05)" }} />
-                  <Bar dataKey="pr" radius={[0, 6, 6, 0]}>
+                  <Bar dataKey="pr" radius={[0, 6, 6, 0]} label={{ position: "right", fill: "rgba(255,255,255,.7)", fontSize: 10, formatter: (v: number) => v.toFixed(3) }}>
                     {hard.map((h) => <Cell key={h.name} fill={h.name.startsWith("Qwen") ? "#f472b6" : FAMILY_COLOR[h.fam]} />)}
                   </Bar>
                 </BarChart>
@@ -137,27 +146,27 @@ export default function Models() {
 
         <div className="grid gap-6 lg:grid-cols-2">
           <Panel title="F0.5 per country" sub="France has no labels, so it is evaluated only on the leaderboard.">
-            <div className="h-80">
+            <div className="h-96 sm:h-80">
               <ResponsiveContainer>
-                <BarChart data={perCountry.slice(0, 8)} margin={{ bottom: 40 }}>
-                  <CartesianGrid vertical={false} stroke="rgba(255,255,255,.08)" />
-                  <XAxis dataKey="name" angle={-30} textAnchor="end" interval={0} tick={{ ...AXIS, fontSize: 10 }} stroke={AXIS.stroke} />
-                  <YAxis domain={[0.9, 1]} tick={AXIS} stroke={AXIS.stroke} />
-                  <Tooltip {...TIP} cursor={{ fill: "rgba(255,255,255,.05)" }} />
-                  <Legend verticalAlign="top" wrapperStyle={{ fontSize: 12 }} />
-                  <Bar dataKey="India" fill="#ff5f7e" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="US" fill="#8b7cf6" radius={[4, 4, 0, 0]} />
+                <BarChart data={perCountry.slice(0, 7)} layout="vertical" margin={{ left: 4, right: 20 }} barGap={2}>
+                  <CartesianGrid horizontal={false} stroke="rgba(255,255,255,.08)" />
+                  <XAxis type="number" domain={[0.9, 1]} allowDataOverflow tick={AXIS} stroke={AXIS.stroke} />
+                  <YAxis type="category" dataKey="name" width={narrow ? 112 : 150} interval={0} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: narrow ? 10 : 11 }} stroke={AXIS.stroke} />
+                  <Tooltip {...TIP} cursor={{ fill: "rgba(255,255,255,.05)" }} formatter={(v: number) => v.toFixed(4)} />
+                  <Legend verticalAlign="top" iconType="circle" wrapperStyle={{ fontSize: 12, paddingBottom: 8 }} />
+                  <Bar dataKey="India" fill="#ff5f7e" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="US" fill="#8b7cf6" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </Panel>
           <Panel title="What the matcher looks at" sub="XGBoost gain of the top hand-crafted features (single-stage matcher, as deployed in Live match).">
-            <div className="h-80">
+            <div className="h-96 sm:h-80">
               <ResponsiveContainer>
-                <BarChart data={[...d.importance_live].slice(0, 12).reverse()} layout="vertical" margin={{ left: 10, right: 20 }}>
+                <BarChart data={[...d.importance_live].slice(0, narrow ? 8 : 12)} layout="vertical" margin={{ left: 4, right: 20 }}>
                   <CartesianGrid horizontal={false} stroke="rgba(255,255,255,.08)" />
                   <XAxis type="number" tick={AXIS} stroke={AXIS.stroke} />
-                  <YAxis type="category" dataKey="feature" width={130} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: 11 }} stroke={AXIS.stroke} />
+                  <YAxis type="category" dataKey="label" width={narrow ? 112 : 170} interval={0} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: narrow ? 10 : 11 }} stroke={AXIS.stroke} />
                   <Tooltip {...TIP} cursor={{ fill: "rgba(255,255,255,.05)" }} />
                   <Bar dataKey="gain" fill="#5b8def" radius={[0, 6, 6, 0]} />
                 </BarChart>
