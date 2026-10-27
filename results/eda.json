@@ -1,0 +1,354 @@
+{
+ "sources": [
+  {
+   "split": "test",
+   "source": "S1",
+   "country": "France",
+   "records": 259452,
+   "name_missing": 0.0,
+   "address_missing": 0.0,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 19.422914450457117,
+   "address_len": 50.07085703713982,
+   "has_pin6": 0.00013104543422290057,
+   "landmark": 0.0
+  },
+  {
+   "split": "test",
+   "source": "S1",
+   "country": "India",
+   "records": 809986,
+   "name_missing": 0.0,
+   "address_missing": 0.0,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 26.374770675048705,
+   "address_len": 77.71385184435286,
+   "has_pin6": 0.0,
+   "landmark": 0.10535614195800914
+  },
+  {
+   "split": "test",
+   "source": "S1",
+   "country": "US",
+   "records": 663106,
+   "name_missing": 0.0,
+   "address_missing": 0.0,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 22.46330752549366,
+   "address_len": 34.96611703106291,
+   "has_pin6": 0.0011943791791960863,
+   "landmark": 9.802354374715355e-05
+  },
+  {
+   "split": "test",
+   "source": "S2",
+   "country": "France",
+   "records": 703378,
+   "name_missing": 0.0,
+   "address_missing": 0.0306193824657581,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 21.103017154360813,
+   "address_len": 40.79684706551821,
+   "has_pin6": 0.00018340067502822097,
+   "landmark": 0.0
+  },
+  {
+   "split": "test",
+   "source": "S2",
+   "country": "India",
+   "records": 2312565,
+   "name_missing": 0.0,
+   "address_missing": 0.022816223543986873,
+   "name_non_latin": 0.2363635184308333,
+   "address_non_latin": 0.2380789296733281,
+   "name_len": 28.251034673619984,
+   "address_len": 70.35032952016572,
+   "has_pin6": 0.0,
+   "landmark": 0.09053064454404525
+  },
+  {
+   "split": "test",
+   "source": "S2",
+   "country": "US",
+   "records": 1871330,
+   "name_missing": 0.0,
+   "address_missing": 0.029448039629568275,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 24.285425873576546,
+   "address_len": 32.80950577104243,
+   "has_pin6": 0.014246551917620089,
+   "landmark": 0.0001004633068459331
+  },
+  {
+   "split": "test",
+   "source": "S3",
+   "country": "France",
+   "records": 731615,
+   "name_missing": 0.0,
+   "address_missing": 0.029443081402103565,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 21.140241793839657,
+   "address_len": 41.18106422710872,
+   "has_pin6": 0.00015718649836321015,
+   "landmark": 0.0
+  },
+  {
+   "split": "test",
+   "source": "S3",
+   "country": "India",
+   "records": 2405000,
+   "name_missing": 0.0,
+   "address_missing": 0.024632016632016633,
+   "name_non_latin": 0.13332182952182953,
+   "address_non_latin": 0.2288910602910603,
+   "name_len": 27.867266943866944,
+   "address_len": 60.92099745924562,
+   "has_pin6": 0.0,
+   "landmark": 0.0680972972972973
+  },
+  {
+   "split": "test",
+   "source": "S3",
+   "country": "US",
+   "records": 1945701,
+   "name_missing": 0.0,
+   "address_missing": 0.028430370339533155,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 24.619150116076415,
+   "address_len": 39.97434066306105,
+   "has_pin6": 0.013703030424510241,
+   "landmark": 9.302559848609832e-05
+  },
+  {
+   "split": "train",
+   "source": "S1",
+   "country": "India",
+   "records": 883188,
+   "name_missing": 0.0,
+   "address_missing": 0.0,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 26.386305067550737,
+   "address_len": 77.6996483194971,
+   "has_pin6": 0.0,
+   "landmark": 0.10576683560012137
+  },
+  {
+   "split": "train",
+   "source": "S1",
+   "country": "US",
+   "records": 1323633,
+   "name_missing": 0.0,
+   "address_missing": 0.0,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 22.46510777534256,
+   "address_len": 34.96243218475212,
+   "has_pin6": 0.0012511020804105066,
+   "landmark": 7.6305138962235e-05
+  },
+  {
+   "split": "train",
+   "source": "S2",
+   "country": "India",
+   "records": 2017799,
+   "name_missing": 0.0,
+   "address_missing": 0.028667870288368664,
+   "name_non_latin": 0.23508040196273267,
+   "address_non_latin": 0.23665439421865112,
+   "name_len": 27.419902081426347,
+   "address_len": 70.20904787002546,
+   "has_pin6": 0.0,
+   "landmark": 0.09042773834261986
+  },
+  {
+   "split": "train",
+   "source": "S2",
+   "country": "US",
+   "records": 3016817,
+   "name_missing": 0.0,
+   "address_missing": 0.03683385502004265,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 23.554298785773216,
+   "address_len": 32.7368334471328,
+   "has_pin6": 0.013872568339412037,
+   "landmark": 7.557634420649314e-05
+  },
+  {
+   "split": "train",
+   "source": "S3",
+   "country": "India",
+   "records": 2115547,
+   "name_missing": 0.0,
+   "address_missing": 0.030700334239797084,
+   "name_non_latin": 0.1316557845323219,
+   "address_non_latin": 0.22489597253098134,
+   "name_len": 27.037635183713714,
+   "address_len": 60.977560215332204,
+   "has_pin6": 0.0,
+   "landmark": 0.06873919605662271
+  },
+  {
+   "split": "train",
+   "source": "S3",
+   "country": "US",
+   "records": 3170056,
+   "name_missing": 0.0,
+   "address_missing": 0.035005059847523196,
+   "name_non_latin": 0.0,
+   "address_non_latin": 0.0,
+   "name_len": 23.977222799849592,
+   "address_len": 39.839797351367466,
+   "has_pin6": 0.013293140562816556,
+   "landmark": 7.602389358421429e-05
+  }
+ ],
+ "cardinality": [
+  {
+   "country": "India",
+   "k": "0",
+   "len": 49351
+  },
+  {
+   "country": "India",
+   "k": "1",
+   "len": 47468
+  },
+  {
+   "country": "India",
+   "k": "2",
+   "len": 149927
+  },
+  {
+   "country": "India",
+   "k": "3",
+   "len": 211965
+  },
+  {
+   "country": "India",
+   "k": "4",
+   "len": 193669
+  },
+  {
+   "country": "India",
+   "k": "5",
+   "len": 129339
+  },
+  {
+   "country": "India",
+   "k": "6+",
+   "len": 101469
+  },
+  {
+   "country": "US",
+   "k": "0",
+   "len": 73896
+  },
+  {
+   "country": "US",
+   "k": "1",
+   "len": 71689
+  },
+  {
+   "country": "US",
+   "k": "2",
+   "len": 225285
+  },
+  {
+   "country": "US",
+   "k": "3",
+   "len": 318876
+  },
+  {
+   "country": "US",
+   "k": "4",
+   "len": 290446
+  },
+  {
+   "country": "US",
+   "k": "5",
+   "len": 192618
+  },
+  {
+   "country": "US",
+   "k": "6+",
+   "len": 150823
+  }
+ ],
+ "truth": [
+  {
+   "country": "India",
+   "s1_entities": 883188,
+   "singleton_share": 0.05587825015738439,
+   "mean_matches": 3.4645432229604567,
+   "mean_s2": 1.6763644886479436,
+   "mean_s3": 1.7881787343125133,
+   "max_matches": 11
+  },
+  {
+   "country": "US",
+   "s1_entities": 1323633,
+   "singleton_share": 0.055828163849042746,
+   "mean_matches": 3.4590570044717834,
+   "mean_s2": 1.6719694960763294,
+   "mean_s3": 1.787087508395454,
+   "max_matches": 11
+  }
+ ],
+ "cleaning": [
+  {
+   "a_country": "India",
+   "pairs": 612215,
+   "name_exact_raw": 0.06559296979002474,
+   "name_exact_clean": 0.6260774401149923,
+   "name_sorted_clean": 0.6366913584280033,
+   "name_phonetic_clean": 0.6403420367027923,
+   "number_eq_raw": 0.730486377121293,
+   "number_eq_clean": 0.7623526603544108,
+   "state_both_known": 0.9532125152111595,
+   "state_eq_clean": 0.9874531119606698
+  },
+  {
+   "a_country": "US",
+   "pairs": 916097,
+   "name_exact_raw": 0.13559371987900845,
+   "name_exact_clean": 0.5619710576500087,
+   "name_sorted_clean": 0.5958364670990081,
+   "name_phonetic_clean": 0.5805586089682643,
+   "number_eq_raw": 0.8300481522566396,
+   "number_eq_clean": 0.8761434917350233,
+   "state_both_known": 0.927995616184749,
+   "state_eq_clean": 0.9987731345881943
+  }
+ ],
+ "splits": [
+  {
+   "split": "A",
+   "len": 883079,
+   "true_pairs": 3057357
+  },
+  {
+   "split": "B",
+   "len": 441331,
+   "true_pairs": 1526932
+  },
+  {
+   "split": "V",
+   "len": 441849,
+   "true_pairs": 1528312
+  },
+  {
+   "split": "ghost",
+   "len": 440562,
+   "true_pairs": 1525764
+  }
+ ]
+}

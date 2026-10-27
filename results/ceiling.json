@@ -1,0 +1,9 @@
+{
+ "f05": 0.9967476340486531,
+ "n_s1": 221041,
+ "precision_micro": 1.0,
+ "recall_micro": 0.9885776327235387,
+ "singleton_acc": 1.0,
+ "nonsingleton_f": 0.9965543056559335,
+ "pred_empty_rate": 0.05677227301722305
+}
