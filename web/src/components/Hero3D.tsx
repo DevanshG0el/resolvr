@@ -77,12 +77,22 @@ export default function Hero3D({ className = "" }: { className?: string }) {
           <stop offset="1" stopColor="#1a0f6e" stopOpacity=".9" />
         </linearGradient>
       </defs>
+      {/* phones: the svg is cropped to its centre, so the side pillars and their cards move inward
+          (CSS px inside an svg are user units) and the small drums give way */}
+      <style>{`
+        @media (max-width: 639px) {
+          .side-left { transform: translateX(120px); }
+          .side-right { transform: translateX(-140px); }
+          .drum { display: none; }
+        }
+      `}</style>
 
       {STARS.map(([x, y], i) => (
         <circle key={i} cx={x} cy={y} r={i % 3 ? 2.2 : 3.4} fill="#fff" className="twinkle" style={{ animationDelay: `${i * 0.4}s` }} />
       ))}
 
       {/* left: Source 2 pillar */}
+      <g className="side side-left">
       <polygon points="120,150 300,150 245,262 175,262" fill="url(#beamG)" className="beam" opacity=".7" />
       <Cylinder x={160} y={262} w={100} h={300} body="url(#violetBody)" top="#e9e4ff" rim="#ffffff" />
       <rect x={120} y={300} width={175} height={280} fill="url(#violetBody)" opacity=".92" />
@@ -91,11 +101,14 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       <path d="M140 470 q30 -60 70 -55 q40 5 20 -60" stroke="#fff" strokeOpacity=".7" fill="none" strokeWidth="1.3" />
       <circle cx={210} cy={415} r={4} fill="#fff" />
       <Card x={140} y={118} r={-10} src="S2" line1="Sharma Traders Pvt" line2="MG Rd, near SBI ATM" accent="#c9c4f5" />
+      </g>
 
       {/* small left drum */}
+      <g className="drum">
       <Cylinder x={260} y={445} w={130} h={140} body="url(#blueBody)" top="#2a3fd6" rim="#14106b" />
       <circle cx={300} cy={452} r={4} fill="#fff" />
       <circle cx={335} cy={458} r={4} fill="#fff" />
+      </g>
 
       {/* centre: Source 1 core */}
       <Cylinder x={400} y={455} w={400} h={140} body="url(#coralBody)" top="#ff9ab5" />
@@ -111,6 +124,7 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       <text x="600" y="520" textAnchor="middle" fontSize="15" fontWeight="600" fill="#fff" opacity=".9" letterSpacing="3">SOURCE 1</text>
 
       {/* right: Source 3 pillar */}
+      <g className="side side-right">
       <polygon points="905,120 1095,120 1035,230 965,230" fill="url(#beamG)" className="beam" style={{ animationDelay: "1.5s" }} opacity=".7" />
       <Cylinder x={950} y={230} w={100} h={360} body="url(#blueBody)" top="#dfe6ff" rim="#ffffff" />
       <rect x={910} y={275} width={185} height={300} fill="url(#blueBody)" />
@@ -119,11 +133,14 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       <path d="M1000 330 q60 10 40 90 q-20 60 30 100" stroke="#fff" strokeOpacity=".7" fill="none" strokeWidth="1.3" />
       <circle cx={1012} cy={330} r={4} fill="#fff" />
       <Card x={925} y={88} r={9} src="S3" line1="शर्मा ट्रेडर्स" line2="M.G. Road, Pune 411001" accent="#9fb0ff" />
+      </g>
 
       {/* small right drum */}
+      <g className="drum">
       <Cylinder x={810} y={470} w={110} h={120} body="url(#indigoBody)" top="#3a2aa8" rim="#1a0f6e" />
       <circle cx={850} cy={476} r={4} fill="#fff" />
       <circle cx={885} cy={480} r={4} fill="#fff" />
+      </g>
 
       <rect y="-40" width="1200" height="600" fill="url(#fade)" />
     </svg>

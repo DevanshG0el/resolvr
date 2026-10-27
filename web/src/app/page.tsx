@@ -36,7 +36,7 @@ export default function Home() {
             <Link href="/models" className="btn-ghost w-full sm:w-auto">See the models <ArrowRight size={16} /></Link>
           </div>
         </div>
-        <Hero3D className="relative mx-auto mt-4 block aspect-[2/1] w-full max-w-6xl sm:-mt-16" />
+        <Hero3D className="relative -mt-2 block h-[300px] w-full sm:-mt-16 sm:aspect-[12/5] sm:h-auto" />
       </section>
 
       <section className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-4 py-14 sm:px-8 lg:grid-cols-4">
