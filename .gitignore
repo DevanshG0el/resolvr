@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+logs/
+app/data/
+output*/
+work*/
+hf_cache/
+web/node_modules/
+web/.next/
+report/node_modules/
+report/package-lock.json
+frontend-inspo/
+results/*.log
+*.parquet
