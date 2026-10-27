@@ -35,7 +35,7 @@ const STARS = [[120, 200], [300, 330], [330, 380], [520, 170], [690, 120], [870,
 
 export default function Hero3D({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 1200 560" className={className} preserveAspectRatio="xMidYMax slice" aria-hidden>
+    <svg viewBox="0 -40 1200 600" className={className} preserveAspectRatio="xMidYMax slice" aria-hidden>
       <defs>
         <linearGradient id="violetBody" x1="0" x2="1">
           <stop offset="0" stopColor="#b3a7f7" />
@@ -125,7 +125,7 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       <circle cx={850} cy={476} r={4} fill="#fff" />
       <circle cx={885} cy={480} r={4} fill="#fff" />
 
-      <rect width="1200" height="560" fill="url(#fade)" />
+      <rect y="-40" width="1200" height="600" fill="url(#fade)" />
     </svg>
   );
 }
