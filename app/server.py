@@ -48,6 +48,20 @@ def health():
             "load_seconds": round(engine.load_s, 1)}
 
 
+@app.get("/api/log")
+def experiment_log():
+    """Submission-by-submission log (results/experiment_log.csv), read on every request so edits show up at once."""
+    def num(v, cast):
+        try:
+            return cast(v) if v not in ("", None) else None
+        except ValueError:
+            return None
+    with open(RES / "experiment_log.csv", newline="") as f:
+        rows = [{**r, "val_f05": num(r["val_f05"], float), "lb_f05": num(r["lb_f05"], float), "lb_rank": num(r["lb_rank"], int)}
+                for r in csv.DictReader(f)]
+    return sorted(rows, key=lambda r: r["date"])
+
+
 @lru_cache(1)
 def overview_payload():
     rows = pl.read_csv(RES / "model_comparison.csv").to_dicts()

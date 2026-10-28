@@ -80,6 +80,22 @@ API endpoints:
 - `POST /api/match` with `{name, address, country}`
 - `POST /api/batch` with a TSV upload
 
+## Experiment log
+
+`results/experiment_log.csv` records every submission (#3 to #29) and validation experiment: what changed, validation macro F0.5 on all 441,849 V entities, whether it was kept, and the leaderboard score and rank. The web app shows it on the Progress page (`GET /api/log`).
+
+| Step | Change | Validation F0.5 |
+|---|---|---|
+| #3 | Baseline: e5 retrieval + 79 features + 2-stage XGBoost + expected-F0.5 | 0.98546 |
+| #4 | + e5 cross-encoder feature | 0.98755 |
+| #5 | Cross-encoder cross-fitted over both halves of B | 0.98828 |
+| #6 | Learned blocker (4.2x fewer pairs) | 0.98780 |
+| #7 | + BGE-reranker-v2-m3 | 0.98841 |
+| #11 | + Qwen3-Reranker-4B (LoRA) | 0.98899 |
+| mx-c | + second Qwen run, fuzzy-namesake features, bagged trees | 0.98922 |
+
+France has no training labels, so its changes (#9, #10, #12 to #18, #21 to #29: self-training rounds, the filler/swap rule, DADER, a France-adapted Qwen, ensembles) are measured on the leaderboard only.
+
 ## Results (V-test, 221,041 entities)
 
 | Model | Macro F0.5 | Precision | Recall |

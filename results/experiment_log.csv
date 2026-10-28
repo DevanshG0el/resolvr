@@ -1,0 +1,26 @@
+id,date,phase,change,val_f05,status,lb_f05,lb_rank,note
+#3,2026-09-25 18:21,US/India matcher,"Baseline: normalisation + transliteration, fine-tuned e5 retrieval (top-40 forward, reverse ranks), 79 pair features, 2-stage XGBoost, expected-F0.5 decision",0.98546,kept,,,first full pipeline
+#4,2026-09-25 19:05,US/India matcher,"+ fine-tuned e5 cross-encoder score as a feature (trained on one half of split B)",0.98755,kept,,,
+#5,2026-09-25 23:45,US/India matcher,"Cross-encoder cross-fitted over both halves of B, so every training row has an out-of-fold score",0.98828,kept,,,
+#6,2026-09-26 09:27,US/India matcher,"Learned blocker: about 6.8 candidates per entity instead of 28 (4.2x fewer pairs, F0.5 ceiling 0.9967)",0.98780,kept,,,"slightly lower, but makes the large cross-encoders affordable"
+#7,2026-09-26 12:09,US/India matcher,"+ BGE-reranker-v2-m3 as a second cross-encoder",0.98841,kept,,,
+#8,2026-09-26 13:05,US/India matcher,"Blocker v2 (2.6M instead of 3.0M validation pairs)",0.98823,reverted,,,lost recall; back to the #6 blocker
+#9,2026-09-26 18:45,France route,"France self-training round 1: e5/BGE cross-encoders fine-tuned on French pseudo-labels (cross-fitted halves)",,kept,,,France has no training labels: leaderboard only
+#10,2026-09-26 20:26,France route,"Self-training round 2; #10b adds 0.99M French pseudo-labelled rows to XGBoost training",0.98836,kept,,,validation is US/India only
+#11,2026-09-26 22:55,US/India matcher,"+ Qwen3-Reranker-4B (LoRA) as a third cross-encoder on the uncertain band",0.98899,kept,,,
+#12-#18,2026-09-26 22:33,France route,"Unsupervised filler/swap rule: mine cosmetic vs decoy words added to French names (same vs changed house number), decoy cap; share threshold variants",,kept,,,several submissions tuning the rule
+#19,2026-09-27 10:40,Release,"Reproducibility check: packaged code regenerates the #19 upload",,kept,,,
+mx-a,2026-09-27 09:31,US/India matcher,"+ second Qwen run (qwen2) as a feature",0.98911,kept,,,validation experiment
+mx-b,2026-09-27 09:34,US/India matcher,"+ fuzzy-namesake features for records without an address",0.98911,kept,,,validation experiment
+mx-c,2026-09-27 09:38,US/India matcher,"+ bagged trees (3 per boosting round)",0.98922,kept,,,best validation score
+cat,2026-09-27 10:34,US/India matcher,"CatBoost blended with XGBoost (weight 0.5)",0.98922,reverted,,,no gain; weight set to 0
+#20,2026-09-27 10:49,Release,"Final US/India matcher (mx-c) refit on B+V; France: self-trained route + filler/swap rule + decoy cap",,kept,,,
+#21,2026-09-27 12:11,France route,"Self-training round 5 on #20's French decisions (rule and cap as labelling functions)",,kept,,,
+#22,2026-09-27 13:28,All countries,"Normalisation fixes: EI legal form, Frs -> Freres, Pas-de-Calais -> Hauts-de-France alias",,kept,,,
+#23,2026-09-27 13:47,France route,"Domain-adversarial alignment (DADER, gradient reversal) for the French cross-encoders",,probe,,,
+#24,2026-09-27 14:05,France route,"#21 + #22 (round 5 on normalised features)",,kept,,,
+#25,2026-09-27 14:37,France route,"Self-training round 6 on #21's decisions",,kept,,,
+#26,2026-09-27 15:49,France route,"Qwen reranker adapted to France on pseudo-labels; #26b adds a rename guard",,kept,,,
+#27,2026-09-27 17:19,France route,"Self-training round 7 on #26b's decisions",,kept,,,
+#28,2026-09-27 17:33,France route,"Ensemble: average of the #26b and #27 French routes",,kept,,,
+#29,2026-09-27 17:38,France route,"Calibration probe: French decision bias +0.2 / +0.4 towards matching",,probe,,,

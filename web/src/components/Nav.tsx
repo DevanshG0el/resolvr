@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/match", label: "Live match" },
   { href: "/explore", label: "Explore" },
   { href: "/models", label: "Models" },
+  { href: "/progress", label: "Progress" },
   { href: "/pipeline", label: "Pipeline" },
 ];
 
@@ -31,7 +32,7 @@ export default function Nav() {
         <Link href="/" className="flex items-center gap-2.5 text-lg font-semibold tracking-tight">
           <Logo /> Resolvr
         </Link>
-        <ul className="hidden items-center gap-9 text-sm md:flex">
+        <ul className="hidden items-center gap-6 text-sm md:flex lg:gap-9">
           {LINKS.map((l) => (
             <li key={l.href}>
               <Link href={l.href} aria-current={path === l.href ? "page" : undefined}
@@ -44,7 +45,7 @@ export default function Nav() {
           ))}
         </ul>
         <div className="hidden items-center gap-6 md:flex">
-          <a href="/api/health" target="_blank" rel="noreferrer" className="text-sm text-white/70 hover:text-white">API</a>
+          <a href="/api/health" target="_blank" rel="noreferrer" className="hidden text-sm text-white/70 hover:text-white lg:inline">API</a>
           <Link href="/match" className="rounded-xl border border-white/80 px-5 py-2.5 text-sm transition hover:bg-white/10">Get started</Link>
         </div>
         <button className="-mr-2 rounded-lg p-2 md:hidden" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}

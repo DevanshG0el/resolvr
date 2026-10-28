@@ -18,6 +18,10 @@ export type ModelRow = {
   pair_precision: number; pair_recall: number; pair_f1: number; tp: number; fp: number; fn: number; tn: number;
   entity_f05: number; entity_precision: number; entity_recall: number; singleton_acc: number; train_s: number;
 };
+export type LogRow = {
+  id: string; date: string; phase: string; change: string; val_f05: number | null;
+  status: "kept" | "reverted" | "probe"; lb_f05: number | null; lb_rank: number | null; note: string;
+};
 export type Overview = {
   models: ModelRow[];
   per_country: { model: string; country: string; f05: number; precision: number; recall: number }[];
@@ -47,6 +51,7 @@ export const api = {
     fetch(`/api/search?q=${encodeURIComponent(q)}&country=${encodeURIComponent(country)}&limit=24`).then(j<Entity[]>),
   entity: (id: string) => fetch(`/api/entity/${encodeURIComponent(id)}`).then(j<EntityDetail>),
   overview: () => fetch("/api/overview").then(j<Overview>),
+  log: () => fetch("/api/log", { cache: "no-store" }).then(j<LogRow[]>),
 };
 
 export const COUNTRIES = ["India", "US", "France"];
