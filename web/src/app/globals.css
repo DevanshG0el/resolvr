@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-outfit), var(--font-deva), var(--font-tamil), var(--font-odia), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), var(--font-deva), var(--font-tamil), var(--font-odia), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), var(--font-deva), var(--font-tamil), var(--font-odia), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jbmono), ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-night: #05031a;
   --color-ink: #0b0730;
   --color-indigo-deep: #160c5c;
@@ -20,6 +22,22 @@ body {
   background: var(--color-night);
   color: #fff;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* in the base layer, so Tailwind's tracking/size utilities still win where a component sets them */
+@layer base {
+  /* headings in the display face, balanced over their lines; paragraphs avoid one-word last lines */
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+  }
+  h1 { letter-spacing: -0.03em; }
+  p { text-wrap: pretty; }
+  /* scores and ids line up in columns */
+  table { font-variant-numeric: tabular-nums; }
 }
 
 /* night sky: black at the top fading into deep indigo, like the hero of the reference */
@@ -32,7 +50,7 @@ body {
 /* inner-page header: same sky, but it settles back into the page colour so overlapping cards sit on a seamless edge */
 .sky-head {
   background:
-    radial-gradient(60% 55% at 50% 80%, rgba(76, 46, 220, 0.45), transparent 70%),
+    radial-gradient(60% 42% at 50% 56%, rgba(76, 46, 220, 0.45), transparent 100%), /* fully faded before the bottom edge */
     linear-gradient(180deg, #030112 0%, #0b0730 40%, #1a0f6e 75%, var(--color-night) 100%);
 }
 

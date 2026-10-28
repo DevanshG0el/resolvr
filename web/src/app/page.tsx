@@ -42,7 +42,7 @@ export default function Home() {
       <section className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-4 py-14 sm:px-8 lg:grid-cols-4">
         {STATS.map((s) => (
           <div key={s.v} className="glass rounded-2xl p-5">
-            <div className="text-3xl font-semibold tracking-tight sm:text-4xl">{s.k}</div>
+            <div className="font-display text-3xl font-semibold tabular-nums tracking-tight sm:text-4xl">{s.k}</div>
             <div className="mt-1 text-sm text-white/60">{s.v}</div>
           </div>
         ))}

@@ -29,7 +29,7 @@ export default function Nav() {
   return (
     <header className="absolute inset-x-0 top-0 z-30">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-8" aria-label="Main">
-        <Link href="/" className="flex items-center gap-2.5 text-lg font-semibold tracking-tight">
+        <Link href="/" className="font-display flex items-center gap-2.5 text-xl font-semibold tracking-tight">
           <Logo /> Resolvr
         </Link>
         <ul className="hidden items-center gap-6 text-sm md:flex lg:gap-9">

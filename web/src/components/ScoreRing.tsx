@@ -7,7 +7,7 @@ export default function ScoreRing({ p, size = 56 }: { p: number; size?: number }
       <circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(255,255,255,.12)" strokeWidth="5" fill="none" />
       <circle cx={size / 2} cy={size / 2} r={r} stroke={color} strokeWidth="5" fill="none" strokeLinecap="round"
         strokeDasharray={`${c * p} ${c}`} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
-      <text x="50%" y="54%" textAnchor="middle" dominantBaseline="middle" fontSize={size * 0.26} fill="#fff" fontWeight="600">
+      <text x="50%" y="54%" textAnchor="middle" dominantBaseline="middle" fontSize={size * 0.26} fill="#fff" fontWeight="600" className="font-display tabular-nums">
         {(p * 100).toFixed(0)}
       </text>
     </svg>

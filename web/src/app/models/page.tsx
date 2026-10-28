@@ -82,7 +82,7 @@ export default function Models() {
             ["Blocking ceiling", d.ceiling.f05.toFixed(4)],
           ].map(([k, v]) => (
             <div key={k} className="glass rounded-2xl p-5">
-              <div className="text-3xl font-semibold">{v}</div>
+              <div className="font-display text-3xl font-semibold tabular-nums tracking-tight">{v}</div>
               <div className="mt-1 text-sm text-white/55">{k}</div>
             </div>
           ))}
