@@ -6,19 +6,18 @@ import {
 } from "recharts";
 import PageHead from "@/components/PageHead";
 import { api, pct, type Overview } from "@/lib/api";
+import { AXIS, BAR_LABEL, CAT_TICK, CURSOR, GRID, TIP } from "@/lib/chart";
 
 const FAMILY_COLOR: Record<string, string> = {
-  "Rule-based": "#7a7596",
-  "Transformer (bi-encoder)": "#c9c4f5",
-  "Transformer (cross-encoder)": "#8b7cf6",
-  Linear: "#9a95b8",
+  "Rule-based": "#8a86a3",
+  "Transformer (bi-encoder)": "#a99ff8",
+  "Transformer (cross-encoder)": "#7b6cf0",
+  Linear: "#b3aecb",
   "Bagged trees": "#5b8def",
-  "Neural network": "#f472b6",
+  "Neural network": "#ec6fb0",
   "Gradient boosting": "#2f6bf0",
-  "Hybrid (ours)": "#ff5f7e",
+  "Hybrid (ours)": "#e5486b",
 };
-const AXIS = { stroke: "rgba(255,255,255,.35)", fontSize: 12 };
-const TIP = { contentStyle: { background: "#0b0730", border: "1px solid rgba(201,196,245,.25)", borderRadius: 12 }, labelStyle: { color: "#fff" }, itemStyle: { color: "rgba(255,255,255,.85)" } };
 const short = (m: string) => m.replace(" (RapidFuzz)", "").replace(" (fine-tuned e5)", " e5").replace(" (fine-tuned)", "").replace(" (3-layer, PyTorch)", "")
   .replace("Ours: 2-stage XGBoost + cross-encoder", "Ours (2-stage)").replace("Ours + expected-F0.5 decision", "Ours + F0.5 rule");
 
@@ -26,7 +25,7 @@ function Panel({ title, sub, children }: { title: string; sub?: string; children
   return (
     <section className="glass rounded-2xl p-4 sm:p-6">
       <h2 className="text-xl font-medium">{title}</h2>
-      {sub && <p className="mt-1 text-sm text-white/55">{sub}</p>}
+      {sub && <p className="mt-1 text-sm text-fg/65">{sub}</p>}
       <div className="mt-5">{children}</div>
     </section>
   );
@@ -50,7 +49,7 @@ export default function Models() {
     return (
       <main>
         <PageHead eyebrow="Models" title="State-of-the-art comparison" sub="Loading results…" />
-        <div className="flex justify-center p-10">{err ? <p className="text-coral">{err}</p> : <Loader2 className="animate-spin text-white/50" />}</div>
+        <div className="flex justify-center p-10">{err ? <p className="text-accent">{err}</p> : <Loader2 className="animate-spin text-fg/60" />}</div>
       </main>
     );
   }
@@ -83,7 +82,7 @@ export default function Models() {
           ].map(([k, v]) => (
             <div key={k} className="glass rounded-2xl p-5">
               <div className="font-display text-3xl font-semibold tabular-nums tracking-tight">{v}</div>
-              <div className="mt-1 text-sm text-white/55">{k}</div>
+              <div className="mt-1 text-sm text-fg/65">{k}</div>
             </div>
           ))}
         </div>
@@ -92,17 +91,17 @@ export default function Models() {
           <div className="h-[440px]">
             <ResponsiveContainer>
               <BarChart data={bars} layout="vertical" margin={{ left: 4, right: 48 }}>
-                <CartesianGrid horizontal={false} stroke="rgba(255,255,255,.08)" />
+                <CartesianGrid horizontal={false} stroke={GRID} />
                 <XAxis type="number" domain={[0.7, 1]} tick={AXIS} stroke={AXIS.stroke} />
-                <YAxis type="category" dataKey="name" width={narrow ? 112 : 150} interval={0} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: narrow ? 10 : 12 }} stroke={AXIS.stroke} />
-                <Tooltip {...TIP} cursor={{ fill: "rgba(255,255,255,.05)" }} />
-                <Bar dataKey="f05" radius={[0, 6, 6, 0]} label={{ position: "right", fill: "#fff", fontSize: 11, formatter: (v: number) => v.toFixed(4) }}>
+                <YAxis type="category" dataKey="name" width={narrow ? 112 : 150} interval={0} tick={{ ...CAT_TICK, fontSize: narrow ? 10 : 12 }} stroke={AXIS.stroke} />
+                <Tooltip {...TIP} cursor={CURSOR} />
+                <Bar dataKey="f05" radius={[0, 6, 6, 0]} label={{ position: "right", fill: BAR_LABEL, fontSize: 11, formatter: (v: number) => v.toFixed(4) }}>
                   {bars.map((b) => <Cell key={b.name} fill={FAMILY_COLOR[b.family]} />)}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-fg/70">
             {Object.entries(FAMILY_COLOR).map(([f, c]) => (
               <span key={f} className="inline-flex items-center gap-1.5"><i className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: c }} />{f}</span>
             ))}
@@ -114,9 +113,9 @@ export default function Models() {
             <div className="h-96 sm:h-80">
               <ResponsiveContainer>
                 <LineChart margin={{ right: 10, bottom: 12 }}>
-                  <CartesianGrid stroke="rgba(255,255,255,.08)" />
-                  <XAxis type="number" dataKey="x" domain={[0, 1]} tick={AXIS} stroke={AXIS.stroke} label={{ value: "Recall", position: "insideBottom", offset: -8, fill: "#aaa", fontSize: 12 }} />
-                  <YAxis type="number" domain={[0.4, 1]} tick={AXIS} stroke={AXIS.stroke} width={44} label={{ value: "Precision", angle: -90, position: "insideLeft", offset: 8, fill: "#aaa", fontSize: 12 }} />
+                  <CartesianGrid stroke={GRID} />
+                  <XAxis type="number" dataKey="x" domain={[0, 1]} tick={AXIS} stroke={AXIS.stroke} label={{ value: "Recall", position: "insideBottom", offset: -8, fill: "rgba(21,18,58,.6)", fontSize: 12 }} />
+                  <YAxis type="number" domain={[0.4, 1]} tick={AXIS} stroke={AXIS.stroke} width={44} label={{ value: "Precision", angle: -90, position: "insideLeft", offset: 8, fill: "rgba(21,18,58,.6)", fontSize: 12 }} />
                   <Tooltip {...TIP} />
                   <Legend iconType="plainline" wrapperStyle={{ fontSize: 11, paddingTop: 14 }} />
                   {curveModels.filter((m) => d.curves[m]).map((m) => (
@@ -131,12 +130,12 @@ export default function Models() {
             <div className="h-96 sm:h-80">
               <ResponsiveContainer>
                 <BarChart data={hard} layout="vertical" margin={{ left: 4, right: 40 }}>
-                  <CartesianGrid horizontal={false} stroke="rgba(255,255,255,.08)" />
+                  <CartesianGrid horizontal={false} stroke={GRID} />
                   <XAxis type="number" domain={[0, 1]} tick={AXIS} stroke={AXIS.stroke} />
-                  <YAxis type="category" dataKey="name" width={narrow ? 112 : 150} interval={0} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: narrow ? 10 : 11 }} stroke={AXIS.stroke} />
-                  <Tooltip {...TIP} cursor={{ fill: "rgba(255,255,255,.05)" }} />
-                  <Bar dataKey="pr" radius={[0, 6, 6, 0]} label={{ position: "right", fill: "rgba(255,255,255,.7)", fontSize: 10, formatter: (v: number) => v.toFixed(3) }}>
-                    {hard.map((h) => <Cell key={h.name} fill={h.name.startsWith("Qwen") ? "#f472b6" : FAMILY_COLOR[h.fam]} />)}
+                  <YAxis type="category" dataKey="name" width={narrow ? 112 : 150} interval={0} tick={{ ...CAT_TICK, fontSize: narrow ? 10 : 11 }} stroke={AXIS.stroke} />
+                  <Tooltip {...TIP} cursor={CURSOR} />
+                  <Bar dataKey="pr" radius={[0, 6, 6, 0]} label={{ position: "right", fill: BAR_LABEL, fontSize: 10, formatter: (v: number) => v.toFixed(3) }}>
+                    {hard.map((h) => <Cell key={h.name} fill={h.name.startsWith("Qwen") ? "#ec6fb0" : FAMILY_COLOR[h.fam]} />)}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -149,13 +148,13 @@ export default function Models() {
             <div className="h-96 sm:h-80">
               <ResponsiveContainer>
                 <BarChart data={perCountry.slice(0, 7)} layout="vertical" margin={{ left: 4, right: 20 }} barGap={2}>
-                  <CartesianGrid horizontal={false} stroke="rgba(255,255,255,.08)" />
+                  <CartesianGrid horizontal={false} stroke={GRID} />
                   <XAxis type="number" domain={[0.9, 1]} allowDataOverflow tick={AXIS} stroke={AXIS.stroke} />
-                  <YAxis type="category" dataKey="name" width={narrow ? 112 : 150} interval={0} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: narrow ? 10 : 11 }} stroke={AXIS.stroke} />
-                  <Tooltip {...TIP} cursor={{ fill: "rgba(255,255,255,.05)" }} formatter={(v: number) => v.toFixed(4)} />
+                  <YAxis type="category" dataKey="name" width={narrow ? 112 : 150} interval={0} tick={{ ...CAT_TICK, fontSize: narrow ? 10 : 11 }} stroke={AXIS.stroke} />
+                  <Tooltip {...TIP} cursor={CURSOR} formatter={(v: number) => v.toFixed(4)} />
                   <Legend verticalAlign="top" iconType="circle" wrapperStyle={{ fontSize: 12, paddingBottom: 8 }} />
-                  <Bar dataKey="India" fill="#ff5f7e" radius={[0, 4, 4, 0]} />
-                  <Bar dataKey="US" fill="#8b7cf6" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="India" fill="#e5486b" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="US" fill="#7b6cf0" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -164,10 +163,10 @@ export default function Models() {
             <div className="h-96 sm:h-80">
               <ResponsiveContainer>
                 <BarChart data={[...d.importance_live].slice(0, narrow ? 8 : 12)} layout="vertical" margin={{ left: 4, right: 20 }}>
-                  <CartesianGrid horizontal={false} stroke="rgba(255,255,255,.08)" />
+                  <CartesianGrid horizontal={false} stroke={GRID} />
                   <XAxis type="number" tick={AXIS} stroke={AXIS.stroke} />
-                  <YAxis type="category" dataKey="label" width={narrow ? 112 : 170} interval={0} tick={{ ...AXIS, fill: "rgba(255,255,255,.75)", fontSize: narrow ? 10 : 11 }} stroke={AXIS.stroke} />
-                  <Tooltip {...TIP} cursor={{ fill: "rgba(255,255,255,.05)" }} />
+                  <YAxis type="category" dataKey="label" width={narrow ? 112 : 170} interval={0} tick={{ ...CAT_TICK, fontSize: narrow ? 10 : 11 }} stroke={AXIS.stroke} />
+                  <Tooltip {...TIP} cursor={CURSOR} />
                   <Bar dataKey="gain" fill="#5b8def" radius={[0, 6, 6, 0]} />
                 </BarChart>
               </ResponsiveContainer>
@@ -178,14 +177,14 @@ export default function Models() {
         <Panel title="Full results" sub="Pair metrics at each model's tuned threshold; entity metrics are the competition's.">
           <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
             <table className="w-full min-w-[760px] text-sm">
-              <thead className="text-left text-xs uppercase tracking-wider text-white/45">
+              <thead className="text-left text-xs uppercase tracking-wider text-fg/60">
                 <tr>{["Model", "Family", "ROC-AUC", "PR-AUC", "Pair F1", "Macro F0.5", "Precision", "Recall", "Train (s)"].map((h) => <th key={h} className="pb-3 pr-3 font-normal">{h}</th>)}</tr>
               </thead>
               <tbody>
                 {models.map((m) => (
-                  <tr key={m.model} className={`border-t border-white/10 ${m.family === "Hybrid (ours)" ? "text-coral" : ""}`}>
+                  <tr key={m.model} className={`border-t border-fg/10 ${m.family === "Hybrid (ours)" ? "text-accent" : ""}`}>
                     <td className="py-2.5 pr-3 font-medium">{m.model}</td>
-                    <td className="pr-3 text-white/60">{m.family}</td>
+                    <td className="pr-3 text-fg/70">{m.family}</td>
                     <td className="pr-3 font-mono">{m.roc_auc.toFixed(4)}</td>
                     <td className="pr-3 font-mono">{m.pr_auc.toFixed(4)}</td>
                     <td className="pr-3 font-mono">{m.pair_f1.toFixed(4)}</td>

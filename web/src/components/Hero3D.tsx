@@ -19,13 +19,13 @@ function Card({ x, y, r, src, line1, line2, accent }: { x: number; y: number; r:
   return (
     <g className="float" style={{ ["--r" as string]: `${r}deg` }}>
       <g transform={`translate(${x} ${y}) rotate(${r})`}>
-        <rect width="148" height="96" rx="14" fill="url(#cardFill)" stroke="rgba(255,255,255,.55)" strokeWidth="1.2" />
+        <rect width="148" height="96" rx="14" fill="url(#cardFill)" stroke="rgba(91,75,216,.35)" strokeWidth="1.2" />
         <rect x="12" y="12" width="34" height="18" rx="9" fill={accent} opacity=".9" />
         <text x="29" y="25" textAnchor="middle" fontSize="11" fontWeight="600" fill="#0b0730">{src}</text>
-        <text x="12" y="52" fontSize="12.5" fontWeight="600" fill="#fff">{line1}</text>
-        <text x="12" y="70" fontSize="10.5" fill="rgba(255,255,255,.7)">{line2}</text>
-        <rect x="12" y="80" width="90" height="4" rx="2" fill="rgba(255,255,255,.35)" />
-        <ellipse cx="74" cy="48" rx="86" ry="20" fill="none" stroke="rgba(255,255,255,.45)" strokeWidth="1" transform="rotate(-14 74 48)" />
+        <text x="12" y="52" fontSize="12.5" fontWeight="600" fill="#15123a">{line1}</text>
+        <text x="12" y="70" fontSize="10.5" fill="rgba(21,18,58,.6)">{line2}</text>
+        <rect x="12" y="80" width="90" height="4" rx="2" fill="rgba(91,75,216,.25)" />
+        <ellipse cx="74" cy="48" rx="86" ry="20" fill="none" stroke="rgba(91,75,216,.3)" strokeWidth="1" transform="rotate(-14 74 48)" />
       </g>
     </g>
   );
@@ -61,20 +61,20 @@ export default function Hero3D({ className = "" }: { className?: string }) {
           <stop offset="1" stopColor="#24157a" />
         </linearGradient>
         <linearGradient id="beamG" x1="0" x2="0" y1="1" y2="0">
-          <stop offset="0" stopColor="#fff" stopOpacity=".95" />
-          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0" stopColor="#8b7cf6" stopOpacity=".55" />
+          <stop offset="1" stopColor="#c4b5fd" stopOpacity="0" />
         </linearGradient>
         <linearGradient id="cardFill" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0" stopColor="#ffffff" stopOpacity=".38" />
-          <stop offset="1" stopColor="#a99ff8" stopOpacity=".18" />
+          <stop offset="0" stopColor="#ffffff" stopOpacity=".92" />
+          <stop offset="1" stopColor="#ede9fe" stopOpacity=".85" />
         </linearGradient>
         <radialGradient id="dome" cx=".4" cy=".3">
           <stop offset="0" stopColor="#fff" />
           <stop offset="1" stopColor="#f6a8d4" />
         </radialGradient>
         <linearGradient id="fade" x1="0" x2="0" y1="0" y2="1">
-          <stop offset=".75" stopColor="#1a0f6e" stopOpacity="0" />
-          <stop offset="1" stopColor="#1a0f6e" stopOpacity=".9" />
+          <stop offset=".75" stopColor="#f7f6ff" stopOpacity="0" />
+          <stop offset="1" stopColor="#f7f6ff" stopOpacity=".6" />
         </linearGradient>
       </defs>
       {/* phones: the svg is cropped to its centre, so the side pillars and their cards move inward
@@ -88,7 +88,7 @@ export default function Hero3D({ className = "" }: { className?: string }) {
       `}</style>
 
       {STARS.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={i % 3 ? 2.2 : 3.4} fill="#fff" className="twinkle" style={{ animationDelay: `${i * 0.4}s` }} />
+        <circle key={i} cx={x} cy={y} r={i % 3 ? 2.2 : 3.4} fill="#8b7cf6" className="twinkle" style={{ animationDelay: `${i * 0.4}s` }} />
       ))}
 
       {/* left: Source 2 pillar */}

@@ -36,13 +36,13 @@ export default function Pipeline() {
           <h2 className="text-xl font-medium">Pipeline stages</h2>
           <ol className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {STAGES.map(([t, tech, d], i) => (
-              <li key={t} className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <li key={t} className="relative rounded-2xl border border-fg/10 bg-fg/[0.03] p-5">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-medium">{i + 1}. {t}</h3>
-                  {i < STAGES.length - 1 && <ArrowRight size={16} className="hidden shrink-0 text-coral lg:block" aria-hidden />}
+                  {i < STAGES.length - 1 && <ArrowRight size={16} className="hidden shrink-0 text-accent lg:block" aria-hidden />}
                 </div>
-                <p className="mt-1 text-xs text-mist">{tech}</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/65">{d}</p>
+                <p className="mt-1 text-xs text-primary">{tech}</p>
+                <p className="mt-2 text-sm leading-relaxed text-fg/72">{d}</p>
               </li>
             ))}
           </ol>
@@ -50,13 +50,13 @@ export default function Pipeline() {
 
         <section className="glass rounded-2xl p-5 sm:p-6">
           <h2 className="text-xl font-medium">Data cleaning: before and after</h2>
-          <p className="mt-1 text-sm text-white/55">Real records from the test set.</p>
-          <div className="mt-5 divide-y divide-white/10">
+          <p className="mt-1 text-sm text-fg/65">Real records from the test set.</p>
+          <div className="mt-5 divide-y divide-fg/10">
             {CLEAN.map((c) => (
               <div key={c.raw} className="grid gap-1 py-3 sm:grid-cols-[1fr_1fr_220px] sm:gap-4">
-                <div className="text-white/80">{c.raw}</div>
-                <div className="font-mono text-sm text-coral">{c.clean}</div>
-                <div className="text-xs text-white/45">{c.note}</div>
+                <div className="text-fg/85">{c.raw}</div>
+                <div className="font-mono text-sm text-accent">{c.clean}</div>
+                <div className="text-xs text-fg/60">{c.note}</div>
               </div>
             ))}
           </div>
@@ -64,23 +64,23 @@ export default function Pipeline() {
 
         <section className="glass rounded-2xl p-5 sm:p-6">
           <h2 className="text-xl font-medium">Splitting without leakage</h2>
-          <p className="mt-1 text-sm text-white/55">Training S1 businesses are split by a hash of their id, so all records of a business land in one split.</p>
+          <p className="mt-1 text-sm text-fg/65">Training S1 businesses are split by a hash of their id, so all records of a business land in one split.</p>
           <div className="mt-5 flex h-4 overflow-hidden rounded-full">
-            <div className="w-[20%] bg-[#7a7596]" /><div className="w-[40%] bg-violet-glow" /><div className="w-[20%] bg-cobalt" /><div className="w-[20%] bg-coral" />
+            <div className="w-[20%] bg-[#8a86a3]" /><div className="w-[40%] bg-primary" /><div className="w-[20%] bg-cobalt" /><div className="w-[20%] bg-accent" />
           </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-4">
             {SPLITS.map((s) => (
-              <div key={s.k}><div className="font-medium">{s.k}</div><div className="text-sm text-white/55">{s.d}</div></div>
+              <div key={s.k}><div className="font-medium">{s.k}</div><div className="text-sm text-fg/65">{s.d}</div></div>
             ))}
           </div>
         </section>
 
         <section className="glass rounded-2xl p-5 sm:p-6">
           <h2 className="text-xl font-medium">Deployment</h2>
-          <div className="mt-4 grid gap-4 text-sm text-white/70 sm:grid-cols-3">
-            <div><div className="font-medium text-white">Next.js frontend</div>Responsive, installable as a PWA on Android, iOS and desktop; proxies /api to the backend.</div>
-            <div><div className="font-medium text-white">FastAPI backend</div>Live matcher (normalise, e5 retrieval, 81 features, XGBoost + SHAP), SQLite FTS for browsing.</div>
-            <div><div className="font-medium text-white">Public access</div>Served from a GPU box through a Cloudflare tunnel over HTTPS; Docker files included.</div>
+          <div className="mt-4 grid gap-4 text-sm text-fg/75 sm:grid-cols-3">
+            <div><div className="font-medium text-fg">Next.js frontend</div>Responsive, installable as a PWA on Android, iOS and desktop; proxies /api to the backend.</div>
+            <div><div className="font-medium text-fg">FastAPI backend</div>Live matcher (normalise, e5 retrieval, 81 features, XGBoost + SHAP), SQLite FTS for browsing.</div>
+            <div><div className="font-medium text-fg">Public access</div>Served from a GPU box through a Cloudflare tunnel over HTTPS; Docker files included.</div>
           </div>
         </section>
       </div>

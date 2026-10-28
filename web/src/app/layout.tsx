@@ -18,10 +18,10 @@ export const metadata: Metadata = {
   description: "Match noisy business records across sources and countries with a hybrid ML pipeline.",
   manifest: "/manifest.webmanifest",
   icons: { icon: "/icon-192.png", apple: "/icon-192.png" },
-  appleWebApp: { capable: true, title: "Resolvr", statusBarStyle: "black-translucent" },
+  appleWebApp: { capable: true, title: "Resolvr", statusBarStyle: "default" },
 };
 
-export const viewport: Viewport = { themeColor: "#05031a", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#f7f6ff", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-dvh font-sans">
         <Nav />
         {children}
-        <footer className="border-t border-white/10 px-4 py-8 text-center text-xs text-white/40 sm:px-8">
+        <footer className="border-t border-fg/10 px-4 py-8 text-center text-xs text-fg/55 sm:px-8">
           Resolvr · Business Entity Resolution mini project · ML Challenge 2026 data (US, India, France)
         </footer>
       </body>

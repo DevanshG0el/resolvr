@@ -110,22 +110,22 @@ export default function GradientMotion({
   );
 }
 
-// site palette: indigo / violet / cobalt with a touch of coral, over the black-to-indigo night sky
-const SKY_BASE = "linear-gradient(180deg, #030112 0%, #0b0730 45%, #1a0f6e 100%)";
-const AURORA = ["#4c2edc", "#2f4bf0", "#7b5cf0", "#b8336f", "#3a1fb8"];
-const AURORA_SOFT = ["#4c2edc", "#2f4bf0", "#8b7cf6", "#c0397a"];
+// light theme: pastel lavender / periwinkle / sky with a touch of pink, multiplied onto a pale lavender sky
+const SKY_BASE = "linear-gradient(180deg, #ffffff 0%, #f3f1ff 50%, #ebe7ff 100%)";
+const AURORA = ["#c4b5fd", "#a5b4fc", "#93c5fd", "#f9a8d4", "#ddd6fe"];
+const AURORA_SOFT = ["#c4b5fd", "#bfdbfe", "#ddd6fe", "#fbcfe8"];
 
 /* hero of the home page */
 export function HeroAurora() {
-  return <GradientMotion className="-z-10" base={SKY_BASE} colors={AURORA} blobs={5} blur={130} sizeMin={40} sizeMax={70} opacity={0.5} range={90} seed={3} grain={0.08} />;
+  return <GradientMotion className="-z-10" base={SKY_BASE} colors={AURORA} blobs={5} blur={130} sizeMin={40} sizeMax={70} opacity={0.75} blend="multiply" range={90} seed={3} grain={0.05} />;
 }
 
 /* inner-page header band: quieter, and it settles into the page colour at the bottom so overlapping cards sit on a clean edge */
 export function HeaderAurora() {
   return (
     <>
-      <GradientMotion className="-z-10" base={SKY_BASE} colors={AURORA_SOFT} blobs={4} blur={100} sizeMin={45} sizeMax={70} opacity={0.5} range={70} seed={11} grain={0.06} />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-2/5 bg-gradient-to-b from-transparent to-night" />
+      <GradientMotion className="-z-10" base={SKY_BASE} colors={AURORA_SOFT} blobs={4} blur={100} sizeMin={45} sizeMax={70} opacity={0.7} blend="multiply" range={70} seed={11} grain={0.04} />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-2/5 bg-gradient-to-b from-transparent to-page" />
     </>
   );
 }

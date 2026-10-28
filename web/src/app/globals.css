@@ -4,23 +4,27 @@
   --font-sans: var(--font-jakarta), var(--font-deva), var(--font-tamil), var(--font-odia), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-outfit), var(--font-deva), var(--font-tamil), var(--font-odia), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jbmono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  --color-night: #05031a;
-  --color-ink: #0b0730;
-  --color-indigo-deep: #160c5c;
-  --color-violet-glow: #8b7cf6;
+  /* light theme: every colour on the site comes from these roles */
+  --color-page: #f7f6ff; /* page background, off-white lavender */
+  --color-surface: #ffffff; /* cards, menus, inputs */
+  --color-fg: #15123a; /* text; lighter text is this at reduced alpha */
+  --color-primary: #5b4bd8; /* indigo: links, highlights, focus */
+  --color-accent: #e5486b; /* coral: matches, active states */
   --color-cobalt: #2f4bf0;
-  --color-coral: #ff5f7e;
-  --color-rose: #f472b6;
-  --color-mist: #c9c4f5;
+  --color-rose: #db2777;
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
 }
 
 body {
-  background: var(--color-night);
-  color: #fff;
+  background: var(--color-page);
+  color: var(--color-fg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -41,25 +45,26 @@ body {
 }
 
 .glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
-  border: 1px solid rgba(201, 196, 245, 0.16);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(21, 18, 58, 0.08);
+  box-shadow: 0 1px 2px rgba(21, 18, 58, 0.04), 0 12px 32px -16px rgba(76, 46, 220, 0.18);
 }
 
 .glow-text {
-  text-shadow: 0 0 40px rgba(139, 124, 246, 0.45);
+  text-shadow: 0 0 36px rgba(255, 255, 255, 0.9);
 }
 
 @layer components {
 .btn-solid {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-medium text-ink transition hover:bg-mist focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-wait disabled:opacity-70;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-fg px-5 py-3 text-sm font-medium text-surface transition hover:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-wait disabled:opacity-70;
 }
 
 .btn-ghost {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/70 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-fg/70 px-5 py-3 text-sm font-medium text-fg transition hover:bg-fg/[0.06] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
 }
 
 .field {
-  @apply w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-violet-glow focus:bg-white/10;
+  @apply w-full rounded-xl border border-fg/15 bg-fg/[0.04] px-4 py-3 text-sm text-fg placeholder:text-fg/55 outline-none transition focus:border-primary focus:bg-fg/[0.06];
 }
 }
 
