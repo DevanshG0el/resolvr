@@ -57,7 +57,7 @@ function MatchInner() {
     <main>
       <PageHead eyebrow="Live match" title="Find a business in every source"
         sub="Type a business as it appears in Source 1. The live matcher cleans it, retrieves candidates from 390k Source 2/3 records and scores each one." />
-      <div className="mx-auto -mt-8 grid max-w-6xl gap-6 px-4 pb-20 sm:px-8 lg:grid-cols-[380px_1fr]">
+      <div className="relative mx-auto -mt-8 grid max-w-6xl gap-6 px-4 pb-20 sm:px-8 lg:grid-cols-[380px_1fr]">
         <form className="glass h-fit min-w-0 rounded-2xl p-5 lg:sticky lg:top-6" onSubmit={(e) => { e.preventDefault(); run(); }}>
           <label className="mb-1.5 block text-sm text-white/70" htmlFor="name">Business name</label>
           <input id="name" className="field" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Sharma Traders Pvt Ltd" required />

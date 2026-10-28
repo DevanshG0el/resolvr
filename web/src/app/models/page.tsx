@@ -73,7 +73,7 @@ export default function Models() {
     <main>
       <PageHead eyebrow="Models" title="State-of-the-art comparison"
         sub={`11 approaches score the same ${(models[0].tp + models[0].fp + models[0].fn + models[0].tn).toLocaleString()} candidate pairs of 221k held-out validation businesses. Each model's threshold is tuned on a separate half of the validation set.`} />
-      <div className="mx-auto -mt-8 max-w-6xl space-y-6 px-4 pb-20 sm:px-8">
+      <div className="relative mx-auto -mt-8 max-w-6xl space-y-6 px-4 pb-20 sm:px-8">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
             ["Best macro F0.5", best.entity_f05.toFixed(4)],

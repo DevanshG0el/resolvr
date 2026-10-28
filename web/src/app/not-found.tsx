@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { HeaderAurora } from "@/components/GradientMotion";
 
 export default function NotFound() {
   return (
-    <main className="sky-head grid min-h-[80dvh] place-items-center px-4 pt-24 text-center">
+    <main className="relative isolate grid min-h-[80dvh] place-items-center overflow-hidden px-4 pt-24 text-center">
+      <HeaderAurora />
       <div>
         <p className="text-sm uppercase tracking-[0.2em] text-mist/80">404</p>
         <h1 className="glow-text mt-3 text-4xl font-medium tracking-tight sm:text-5xl">No record matches this page</h1>

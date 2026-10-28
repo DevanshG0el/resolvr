@@ -60,7 +60,7 @@ export default function Explore() {
     <main>
       <PageHead eyebrow="Explore" title="Browse the submitted predictions"
         sub="60,000 test businesses (20k per country) with the candidates blocking kept for them and the matches the full pipeline submitted." />
-      <div className="mx-auto -mt-8 grid max-w-6xl gap-6 px-4 pb-20 sm:px-8 lg:grid-cols-[1fr_1.2fr]">
+      <div className="relative mx-auto -mt-8 grid max-w-6xl gap-6 px-4 pb-20 sm:px-8 lg:grid-cols-[1fr_1.2fr]">
         <section className="glass min-w-0 rounded-2xl p-4 sm:p-5">
           <form className="flex flex-col gap-2 sm:flex-row" onSubmit={(e) => { e.preventDefault(); search(); }}>
             <div className="relative flex-1">

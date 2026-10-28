@@ -72,7 +72,7 @@ export default function Progress() {
     <main>
       <PageHead eyebrow="Progress" title="Experiment log"
         sub="Every submission and validation experiment between the first pipeline and the final upload: what changed, what it did to held-out F0.5, and where it put us on the leaderboard." />
-      <div className="mx-auto -mt-8 max-w-6xl space-y-6 px-4 pb-20 sm:px-8">
+      <div className="relative mx-auto -mt-8 max-w-6xl space-y-6 px-4 pb-20 sm:px-8">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
             ["Baseline validation F0.5", base.toFixed(5)],

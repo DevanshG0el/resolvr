@@ -31,7 +31,7 @@ export default function Pipeline() {
     <main>
       <PageHead eyebrow="Pipeline" title="From noisy rows to resolved businesses"
         sub="Data cleaning, splitting, candidate generation, matching and deployment: what runs where, and why." />
-      <div className="mx-auto -mt-8 max-w-6xl space-y-6 px-4 pb-20 sm:px-8">
+      <div className="relative mx-auto -mt-8 max-w-6xl space-y-6 px-4 pb-20 sm:px-8">
         <section className="glass rounded-2xl p-5 sm:p-6">
           <h2 className="text-xl font-medium">Pipeline stages</h2>
           <ol className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
