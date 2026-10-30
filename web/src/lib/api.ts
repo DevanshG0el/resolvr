@@ -33,6 +33,22 @@ export type Overview = {
   eda: null | Record<string, unknown>;
 };
 
+export type SourceStat = {
+  split: "train" | "test"; source: "S1" | "S2" | "S3"; country: string; records: number;
+  name_missing: number; address_missing: number; name_non_latin: number; address_non_latin: number;
+  name_len: number; address_len: number; has_pin6: number; landmark: number;
+};
+export type DataStats = {
+  sources: SourceStat[];
+  cardinality: { country: string; k: string; len: number }[];
+  truth: { country: string; s1_entities: number; singleton_share: number; mean_matches: number; mean_s2: number; mean_s3: number; max_matches: number }[];
+  cleaning: { a_country: string; pairs: number; name_exact_raw: number; name_exact_clean: number; name_sorted_clean: number; name_phonetic_clean: number;
+    number_eq_raw: number; number_eq_clean: number; state_both_known: number; state_eq_clean: number }[];
+  splits: { split: string; len: number; true_pairs: number }[];
+  blocking: { rule: string; cands_per_s1: number; recall: number; matched_pairs_kept: number }[];
+  learning_curve: { b_fraction: number; rows: number; f05: number; precision: number; recall: number }[];
+};
+
 async function j<T>(res: Response): Promise<T> {
   if (!res.ok) {
     const body = await res.text();
@@ -51,6 +67,7 @@ export const api = {
     fetch(`/api/search?q=${encodeURIComponent(q)}&country=${encodeURIComponent(country)}&limit=24`).then(j<Entity[]>),
   entity: (id: string) => fetch(`/api/entity/${encodeURIComponent(id)}`).then(j<EntityDetail>),
   overview: () => fetch("/api/overview").then(j<Overview>),
+  data: () => fetch("/api/data").then(j<DataStats>),
   log: () => fetch("/api/log", { cache: "no-store" }).then(j<LogRow[]>),
 };
 

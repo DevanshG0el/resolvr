@@ -85,6 +85,21 @@ def overview_payload():
     }
 
 
+@lru_cache(1)
+def data_payload():
+    eda = json.loads((RES / "eda.json").read_text())
+    return {
+        **eda,
+        "blocking": pl.read_csv(RES / "blocking_study.csv").to_dicts(),
+        "learning_curve": pl.read_csv(RES / "learning_curve.csv").to_dicts(),
+    }
+
+
+@app.get("/api/data")
+def data():
+    return data_payload()
+
+
 @app.get("/api/overview")
 def overview():
     return overview_payload()
